@@ -7,6 +7,7 @@ import markovify
 import requests
 import getdata
 import exportModel
+import genLocation
 
 # コンフィグの読み込み
 config_ini = configparser.ConfigParser()
@@ -56,7 +57,8 @@ def worker():
     write_access_token = config_ini['write']['access_token']
     result = genText(elements)
     sentence = result[0] + '\n' + result[1]
-    sentence = sentence.replace(' ', '') + ' #bot'
+    location = genLocation.main()
+    sentence = sentence.replace(' ', '') + "\n" + location + 'にて #bot'
     try:
         post_toot(domain, write_access_token, {"status": sentence})
         print("投稿しました。 内容: " + sentence)
