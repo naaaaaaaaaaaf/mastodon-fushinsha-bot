@@ -1,0 +1,16 @@
+version: "3"
+services:
+  main_bot:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - "./src:/scripts"
+    environment:
+      TZ: "Asia/Tokyo"
+      FLASK_ENV: "development"
+    tty: true
+    command: >
+      /bin/bash -c "
+      cd /scripts &&
+      python3 app.py"
